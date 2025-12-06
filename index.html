@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Methodology & Model Validation Tool</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Methodology & Model Validation Tool</h1>
+            <p class="subtitle">Upload your methodology document and Excel model for comprehensive validation</p>
+        </header>
+
+        <div class="upload-section">
+            <div class="upload-box">
+                <h2>📄 Methodology Document</h2>
+                <input type="file" id="methodologyFile" accept=".pdf,.doc,.docx,.txt" />
+                <div class="file-info" id="methodologyInfo"></div>
+            </div>
+
+            <div class="upload-box">
+                <h2>📈 Excel Model</h2>
+                <input type="file" id="excelFile" accept=".xlsx,.xls" />
+                <div class="file-info" id="excelInfo"></div>
+            </div>
+        </div>
+
+        <button id="validateBtn" class="validate-btn" disabled>🔍 Validate Documents</button>
+
+        <div id="loadingIndicator" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Analyzing documents...</p>
+        </div>
+
+        <div id="results" class="results hidden">
+            <div class="results-header">
+                <h2>Validation Results</h2>
+                <div class="overall-score" id="overallScore"></div>
+            </div>
+
+            <!-- Methodology Results -->
+            <section class="result-section">
+                <h3>📄 Methodology Analysis</h3>
+                <div id="methodologyResults"></div>
+            </section>
+
+            <!-- Excel Model Results -->
+            <section class="result-section">
+                <h3>📈 Excel Model Analysis</h3>
+                <div id="excelResults"></div>
+            </section>
+
+            <!-- Alignment Check -->
+            <section class="result-section">
+                <h3>🔗 Methodology-Model Alignment</h3>
+                <div id="alignmentResults"></div>
+            </section>
+
+            <!-- SROI Analysis -->
+            <section class="result-section">
+                <h3>💰 SROI Analysis</h3>
+                <div id="sroiResults"></div>
+            </section>
+
+            <!-- Recommendations -->
+            <section class="result-section">
+                <h3>💡 Recommendations & Flags</h3>
+                <div id="recommendations"></div>
+            </section>
+
+            <!-- Download Report -->
+            <div class="actions">
+                <button id="downloadReport" class="action-btn">📥 Download Full Report</button>
+                <button id="exportHighlights" class="action-btn">🖍️ Export Highlights</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="validator.js"></script>
+</body>
+</html>
