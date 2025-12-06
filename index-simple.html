@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Methodology & Model Validation Tool</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        h1 { color: #2d3748; text-align: center; margin-bottom: 10px; }
+        .subtitle { color: #718096; text-align: center; margin-bottom: 40px; }
+        .status {
+            padding: 20px;
+            background: #f7fafc;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .success { background: #c6f6d5; color: #22543d; }
+        .error { background: #fed7d7; color: #742a2a; }
+        .warning { background: #feebc8; color: #7c2d12; }
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover { background: #5568d3; }
+        .info {
+            padding: 15px;
+            background: #ebf8ff;
+            border-left: 4px solid #4299e1;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Methodology & Model Validation Tool</h1>
+        <p class="subtitle">Safari Compatibility Test Version</p>
+
+        <div id="status" class="status">
+            <h2>System Check</h2>
+            <p id="browserInfo"></p>
+        </div>
+
+        <button onclick="testJavaScript()">Test 1: JavaScript Works</button>
+        <button onclick="testFileReader()">Test 2: File Reader API</button>
+        <button onclick="testExternalLibraries()">Test 3: External Libraries (CDN)</button>
+        <button onclick="window.location.href='index.html'">Open Full Version</button>
+
+        <div id="results"></div>
+
+        <div class="info">
+            <h3>Troubleshooting Guide:</h3>
+            <ul style="margin-left: 20px; margin-top: 10px; line-height: 1.8;">
+                <li><strong>Method 1:</strong> File → Open File → Select index.html</li>
+                <li><strong>Method 2:</strong> Drag index.html into Safari window</li>
+                <li><strong>Method 3:</strong> Terminal → <code>open -a Safari index.html</code></li>
+                <li><strong>Method 4:</strong> Right-click index.html → Open With → Safari</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Display browser info
+        document.getElementById('browserInfo').innerHTML = `
+            Browser: ${navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome') ? 'Safari ✅' : navigator.userAgent}
+            <br>Platform: ${navigator.platform}
+        `;
+
+        function showResult(message, type = 'success') {
+            const div = document.createElement('div');
+            div.className = `status ${type}`;
+            div.innerHTML = message;
+            document.getElementById('results').appendChild(div);
+        }
+
+        function testJavaScript() {
+            try {
+                const test = [1, 2, 3].map(x => x * 2);
+                showResult('✅ JavaScript is working! Modern ES6 syntax supported.', 'success');
+            } catch (e) {
+                showResult('❌ JavaScript Error: ' + e.message, 'error');
+            }
+        }
+
+        function testFileReader() {
+            if (window.FileReader) {
+                showResult('✅ File Reader API is supported! File uploads will work.', 'success');
+            } else {
+                showResult('❌ File Reader API not supported', 'error');
+            }
+        }
+
+        function testExternalLibraries() {
+            showResult('⏳ Loading external libraries (this requires internet)...', 'warning');
+
+            // Test loading xlsx library
+            const script1 = document.createElement('script');
+            script1.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+            script1.onload = function() {
+                showResult('✅ Excel parsing library (SheetJS) loaded successfully!', 'success');
+            };
+            script1.onerror = function() {
+                showResult('❌ Could not load Excel parsing library. Check internet connection.', 'error');
+            };
+            document.head.appendChild(script1);
+
+            // Test loading mammoth library
+            const script2 = document.createElement('script');
+            script2.src = 'https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js';
+            script2.onload = function() {
+                showResult('✅ Word document parsing library (Mammoth) loaded successfully!', 'success');
+            };
+            script2.onerror = function() {
+                showResult('❌ Could not load Word document parsing library. Check internet connection.', 'error');
+            };
+            document.head.appendChild(script2);
+        }
+
+        // Auto-run basic tests
+        setTimeout(() => {
+            testJavaScript();
+            testFileReader();
+        }, 500);
+    </script>
+</body>
+</html>
